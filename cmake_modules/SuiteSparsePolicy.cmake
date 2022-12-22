@@ -67,7 +67,7 @@
 
 cmake_minimum_required ( VERSION 3.19 )
 
-message ( STATUS "Source:        ${CMAKE_SOURCE_DIR} ")
+message ( STATUS "Source:        ${CMAKE_CURRENT_LIST_DIR} ")
 message ( STATUS "Build:         ${CMAKE_BINARY_DIR} ")
 
 cmake_policy ( SET CMP0042 NEW )    # enable MACOSX_RPATH by default
@@ -81,7 +81,7 @@ include ( GNUInstallDirs )
 
 # add the cmake_modules folder for this package to the module path
 set ( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-    ${CMAKE_SOURCE_DIR}/cmake_modules )
+    ${CMAKE_CURRENT_LIST_DIR}/cmake_modules )
 
 # NSTATIC option
 if ( NSTATIC_DEFAULT_ON )
@@ -97,11 +97,11 @@ option ( LOCAL_INSTALL  "Install in SuiteSparse/lib" off )
 if ( SUITESPARSE_SECOND_LEVEL )
     # some packages in SuiteSparse are in SuiteSparse/Package/Package
     set ( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-        ${CMAKE_SOURCE_DIR}/../../lib/cmake )
+        ${CMAKE_CURRENT_LIST_DIR}/../../lib/cmake )
 else ( )
     # most packages in SuiteSparse are located in SuiteSparse/Package
     set ( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-        ${CMAKE_SOURCE_DIR}/../lib/cmake )
+        ${CMAKE_CURRENT_LIST_DIR}/../lib/cmake )
 endif ( )
 
 # add the ./build folder to the runpath so other SuiteSparse packages can
@@ -117,17 +117,17 @@ if ( LOCAL_INSTALL )
     if ( SUITESPARSE_SECOND_LEVEL )
         # the package is normally located at the 2nd level inside SuiteSparse
         # (SuiteSparse/GraphBLAS/GraphBLAS/ for example)
-        if ( ( EXISTS ${CMAKE_SOURCE_DIR}/../../lib     ) AND
-           (   EXISTS ${CMAKE_SOURCE_DIR}/../../include ) AND
-           (   EXISTS ${CMAKE_SOURCE_DIR}/../../bin     ) )
+        if ( ( EXISTS ${CMAKE_CURRENT_LIST_DIR}/../../lib     ) AND
+           (   EXISTS ${CMAKE_CURRENT_LIST_DIR}/../../include ) AND
+           (   EXISTS ${CMAKE_CURRENT_LIST_DIR}/../../bin     ) )
             set ( INSIDE_SUITESPARSE true )
         endif ( )
     else ( )
         # typical case, the package is at the 1st level inside SuiteSparse
         # (SuiteSparse/AMD for example)
-        if ( ( EXISTS ${CMAKE_SOURCE_DIR}/../lib     ) AND
-             ( EXISTS ${CMAKE_SOURCE_DIR}/../include ) AND
-             ( EXISTS ${CMAKE_SOURCE_DIR}/../bin     ) )
+        if ( ( EXISTS ${CMAKE_CURRENT_LIST_DIR}/../lib     ) AND
+             ( EXISTS ${CMAKE_CURRENT_LIST_DIR}/../include ) AND
+             ( EXISTS ${CMAKE_CURRENT_LIST_DIR}/../bin     ) )
             set ( INSIDE_SUITESPARSE true )
         endif ( )
     endif ( )
@@ -137,13 +137,13 @@ if ( INSIDE_SUITESPARSE )
     # ../lib and ../include exist: the package is inside SuiteSparse.
     # find ( REAL_PATH ...) requires cmake 3.19.
     if ( SUITESPARSE_SECOND_LEVEL )
-        file ( REAL_PATH  ${CMAKE_SOURCE_DIR}/../../lib     SUITESPARSE_LIBDIR )
-        file ( REAL_PATH  ${CMAKE_SOURCE_DIR}/../../include SUITESPARSE_INCLUDEDIR )
-        file ( REAL_PATH  ${CMAKE_SOURCE_DIR}/../../bin     SUITESPARSE_BINDIR )
+        file ( REAL_PATH  ${CMAKE_CURRENT_LIST_DIR}/../../lib     SUITESPARSE_LIBDIR )
+        file ( REAL_PATH  ${CMAKE_CURRENT_LIST_DIR}/../../include SUITESPARSE_INCLUDEDIR )
+        file ( REAL_PATH  ${CMAKE_CURRENT_LIST_DIR}/../../bin     SUITESPARSE_BINDIR )
     else ( )
-        file ( REAL_PATH  ${CMAKE_SOURCE_DIR}/../lib     SUITESPARSE_LIBDIR )
-        file ( REAL_PATH  ${CMAKE_SOURCE_DIR}/../include SUITESPARSE_INCLUDEDIR )
-        file ( REAL_PATH  ${CMAKE_SOURCE_DIR}/../bin     SUITESPARSE_BINDIR )
+        file ( REAL_PATH  ${CMAKE_CURRENT_LIST_DIR}/../lib     SUITESPARSE_LIBDIR )
+        file ( REAL_PATH  ${CMAKE_CURRENT_LIST_DIR}/../include SUITESPARSE_INCLUDEDIR )
+        file ( REAL_PATH  ${CMAKE_CURRENT_LIST_DIR}/../bin     SUITESPARSE_BINDIR )
     endif ( )
     message ( STATUS "Local install: ${SUITESPARSE_LIBDIR} ")
     message ( STATUS "Local include: ${SUITESPARSE_INCLUDEDIR} ")

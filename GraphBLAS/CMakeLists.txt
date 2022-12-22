@@ -37,10 +37,10 @@ set ( GraphBLAS_API_VERSION_SUB   0 )
 #-------------------------------------------------------------------------------
 
 set ( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-    ${CMAKE_SOURCE_DIR}/cmake_modules
-    ${CMAKE_SOURCE_DIR}/../cmake_modules
-    ${CMAKE_SOURCE_DIR}/../../SuiteSparse_config/cmake_modules
-    ${CMAKE_SOURCE_DIR}/../../SuiteSparse/SuiteSparse_config/cmake_modules
+    ${CMAKE_CURRENT_LIST_DIR}/cmake_modules
+    ${CMAKE_CURRENT_LIST_DIR}/../cmake_modules
+    ${CMAKE_CURRENT_LIST_DIR}/../../SuiteSparse_config/cmake_modules
+    ${CMAKE_CURRENT_LIST_DIR}/../../SuiteSparse/SuiteSparse_config/cmake_modules
     )
 
 set ( SUITESPARSE_SECOND_LEVEL true )
@@ -122,6 +122,8 @@ message ( STATUS "CMAKE build type:          " ${CMAKE_BUILD_TYPE} )
 
 if ( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
     message ( STATUS "CMAKE C Flags debug:       " ${CMAKE_C_FLAGS_DEBUG} )
+elseif (${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo" )
+    message ( STATUS "CMAKE C Flags release:     " ${CMAKE_C_FLAGS_RELEASE} )
 else ( )
     message ( STATUS "CMAKE C Flags release:     " ${CMAKE_C_FLAGS_RELEASE} )
 endif ( )
